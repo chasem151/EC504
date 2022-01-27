@@ -1,0 +1,5 @@
+Slow Failed with iteration stop at i = 1000000000
+powerC =    4.40315e+13  Time = 8.104e-06
+powerSlow = 22026.5  Time = 2.34306
+powerFast = 4.40315e+13  Time = 2.35e-07
+powerveryFast = 4.40315e+13  Time = 2.37e-07
