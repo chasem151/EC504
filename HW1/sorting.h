@@ -79,10 +79,10 @@ void mergeSortblend(int a[], int a_tmp[], int l, int r)
    mid = (l+r)/2;
    mergeSortblend(a,a_tmp, l, mid);
    mergeSortblend(a,a_tmp, mid+1, r);
-   for(i=m+1; i>l; i--){
+   for(i=mid+1; i>l; i--){
      a_tmp[i-1] = a[i-1];
    }
-   for(j=m;j<r;j++){
+   for(j=mid;j<r;j++){
      a_tmp[r+mid-j] = a[j+1];
    }
    for(k=l;k<=r;k++){
