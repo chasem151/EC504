@@ -1,0 +1,48 @@
+
+InOrder: 
+key: 0 | right child: 1
+key: 1 | right child: 2
+key: 2 | right child: 3
+key: 3 | right child: 4
+key: 4 | right child: 5
+key: 5 | right child: 6
+key: 6 | right child: 7
+key: 7 | right child: 8
+key: 8 | right child: 9
+key: 9
+
+After Search 6
+key: 0
+key: 1 | left child: 0 | right child: 3
+key: 2
+key: 3 | left child: 2 | right child: 5
+key: 4
+key: 5 | left child: 4
+key: 6 | left child: 1 | right child: 7
+key: 7 | right child: 8
+key: 8 | right child: 9
+key: 9
+
+After Search 3
+key: 0
+key: 1 | left child: 0 | right child: 2
+key: 2
+key: 3 | left child: 1 | right child: 6
+key: 4
+key: 5 | left child: 4
+key: 6 | left child: 5 | right child: 7
+key: 7 | right child: 8
+key: 8 | right child: 9
+key: 9
+
+After Delete 8
+key: 0
+key: 1 | left child: 0 | right child: 2
+key: 2
+key: 3 | left child: 1 | right child: 5
+key: 4
+key: 5 | left child: 4
+key: 6 | left child: 3
+key: 7 | left child: 6 | right child: 9
+key: 9
+

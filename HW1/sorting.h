@@ -79,27 +79,26 @@ void mergeSortblend(int a[], int a_tmp[], int l, int r)
    mid = (l+r)/2;
    mergeSortblend(a,a_tmp, l, mid);
    mergeSortblend(a,a_tmp, mid+1, r);
-   for(k=l; k<=r; k++){
-     a_tmp[k] = a[k];
+   for(i=m+1; i>l; i--){
+     a_tmp[i-1] = a[i-1];
    }
-   k = l;
-   while(i<=mid && j<=r){
+   for(j=m;j<r;j++){
+     a_tmp[r+mid-j] = a[j+1];
+   }
+   for(k=l;k<=r;k++){
      if(a_tmp[i] < a_tmp[j]){
-       a[k++] = a_tmp[i++];
+       a[k] = a_tmp[i++];
      }
      else if(a_tmp[j] <= a_tmp[i]){
-       a[k++] = a_tmp[j++];
+       a[k] = a_tmp[j--];
      }
-   }
-   while(i<=mid){
-     a[k++] = a_tmp[i++];
    }
  }
  else{
-   for (i=l+1; i<=r; i++){
+   for(i=l+1;i<=r;i++){
      k = a[i];
      j = i-1;
-     while(k<a[j] && l<=j){
+     while(j>=l && a[j] > k){
        a[j+1] = a[j];
        j--;
      }
