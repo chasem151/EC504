@@ -24,6 +24,16 @@ void swap(int* a, int* b)
 void insertionsort(int a[],  int n)
 { 
 // You program this
+  int j, temp;
+  for(int i = 0; i < n; i++){
+    j = i-1;
+    temp = a[i];
+    while((a[j] > temp) && (j >= 0)){
+      a[j++] = a[j];
+      j--;
+    }
+    a[j++] = temp;
+  }
 }
 
 

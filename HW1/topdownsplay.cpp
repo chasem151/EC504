@@ -30,14 +30,19 @@ class SplayTree{
         Tree_node* Right_Rotate(Tree_node* k2){
             // Single rotate the root k2 to the right
             // You have to implement this, return the new root
- 
-
+            Tree_node* newroot = k2 -> lchild;
+            k2 -> lchild = newroot -> rchild;
+            newroot -> rchild = k2;
+            return newroot;
         }
             // LL(Y rotates to the left)
         Tree_node* Left_Rotate(Tree_node* k2){
             // Single rotate the root k2 to the left
             // You have to implement this, return the new root.
-
+            Tree_node* newroot = k2 -> rchild;
+            k2 -> rchild = newroot -> lchild;
+            newroot -> lchild = k2;
+            return newroot;
         }
 
             // An implementation of top-down splay tree
@@ -48,8 +53,47 @@ class SplayTree{
             if (!root)
                 return NULL;
             Tree_node Tree;
-            /* .......*/
- 
+            Tree_node *left, *right;
+            Tree.lchild = Tree.rchild = NULL;
+            left = right = &Tree;
+            bool check = false;
+
+            while(1) {
+                if (key < root -> key){
+                    if (root -> lchild == NULL){
+                        break;
+                    }
+                    if (key < root -> lchild -> key){
+                        root = Right_Rotate(root);
+                        if (root -> lchild == NULL){
+                            break;
+                        }
+                    }
+                    right -> lchild = root;
+                    right = root;
+                    root = root -> lchild;
+                }
+                else if (key > root -> key){
+                    if (key > root -> rchild -> key){
+                        root = Left_Rotate(root);
+                        if (root -> rchild == NULL){
+                            break;
+                        }
+                    }
+                    if (root -> rchild == NULL){
+                        break;
+                    }
+                    left -> rchild = root;
+                    left = root;
+                    root = root -> rchild;
+                }
+                else break;
+            }
+            left -> rchild = root -> lchild;
+            right -> lchild = root -> rchild;
+            root -> lchild = Tree.rchild;
+            root -> rchild = Tree.lchild;
+            return root;
         }
 
         Tree_node* New_Node(int key) {
