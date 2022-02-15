@@ -122,7 +122,7 @@ void simpleTimsort(int a[], int a_tmp[], int n)
   int runstack[6000];
   int perstack=0;
   runstack[perstack] = 0;
-  int i, j, z, key, l, m, r;
+  int i, j, z, key, l, m, r, k;
   int c=1;
   int run[n];
   int lastprevious, last;
