@@ -2,6 +2,7 @@
 #include <fstream>
 #include <chrono>
 #include <queue>
+#include <cstring>
 using namespace std;
 
 /***********************************************************
@@ -122,6 +123,18 @@ int find_connected_components_BFS(int *FirstVertex, int V, int *EdgeList,int E, 
 
             // Implement a BFS starting from vertex kk.  Mark every vertex v you find with 
             // Component[v]= NCC_BFS, the component number.
+            Q.push(kk);
+            Component[kk] = NCC_BFS;
+            while (!Q.empty()){
+                current = Q.front();
+                Q.pop();
+                for (int jj = FirstVertex[current]; jj != -1; jj = EdgeList[jj]){
+                    if (Component[EdgeList[jj]] < 0){
+                        Component[EdgeList[jj]] = NCC_BFS;
+                        Q.push(EdgeList[jj]);
+                    }
+                }
+            }
  
         }
     }
@@ -132,6 +145,14 @@ void DFS(int v, int *FirstVertex, int V, int *EdgeList,int E, int *Component,int
     //
     // Implement this function.  Mark v with the number of the component. Then find an unmarked 
     // neighbor of v and recursively do DFS on the neighbor
+    if(Component[v] < 0){
+        Component[v] = NCC;
+        for (int jj = FirstVertex[v]; jj != -1; jj = EdgeList[jj]){
+            if (Component[EdgeList[jj]] < 0){
+                DFS(EdgeList[jj], FirstVertex, V, EdgeList, E, Component, NCC);
+            }
+        }
+    }
 
 }
 

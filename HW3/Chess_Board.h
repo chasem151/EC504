@@ -48,8 +48,23 @@ bool Chess_Board::DFS(int row){  // Add queen to row...
 	// where previous queens cannot capture the current position.
 	// This will use the goodMove function to check whether a queen position can be captured by 
 	// queens on the board in previous rows.
-	//
-	//
+	// Using DFS row by row calculate placement of queens on the board.
+	if(row >= NN){
+		found = true;
+	}
+	else{
+		for(int i = 0; i < NN; i++){
+			if(goodMove(row, i)){
+				AddQueen(row, i);
+				if(DFS(row+1)){
+					found = true;
+				}
+				else{
+					RemoveQueen(row, i);
+				}
+			}
+		}
+	}
     return found;
 }
 
@@ -68,7 +83,30 @@ bool Chess_Board::goodMove(int irow, int jcol){ // square is not captured by que
 	  //  jcol can be captured by the existing queens on the board in rows 0 .. irow-1. 
 	  //
 	  //
-    return true;
+	  //  This function should return true if the square is not captured by the existing queens.
+	  //  Otherwise, it should return false.
+	  //
+	  //  The function should use the A[][] array to check whether the square is captured.
+	  //  A[i][j] = 0 means that the square is not captured by any queen.
+	  //  A[i][j] = 1 means that the square is captured by a queen in row i.
+	  //
+	  //  The function should also use the getSize() function to get the size of the board.
+	  //	
+	  //  The function should use the min function to find the minimum of two values.
+	  //
+	  //  The function should use the abs function to find the absolute value of a number.
+	  //
+	  for(row = 0; row < irow; row++){
+		  col = jcol - (irow - row);
+		  if(col >= 0 && col < getSize() && A[row][col] == 1){
+			  return false;
+		  }
+		  col = jcol + (irow - row);
+		  if(col >= 0 && col < getSize() && A[row][col] == 1){
+			  return false;
+		  }
+		  return true;
+	  	}
 }
 
 int Chess_Board::getSize(){
