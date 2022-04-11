@@ -30,22 +30,21 @@ void BellmanFord(nodeitem N[], int Or, int Nm)
    // mark u as -1 in the array when removing it from the queue
     struct arc *edge;
     int u,v,dv, min_d, min_v;
-    nodeitem* start = &N[Or];
-    start->key = 0;
-    priority_queue<nodeitem*, vector<nodeitem*>, greater<nodeitem*> > Q;
-    Q.push(start);
+    N[Or].key = 0;
+    queue<int> Q;
+    Q.push(N[Or].id);
     while(!Q.empty()){
-      nodeitem* u = Q.top();
+      u = Q.front();
       Q.pop();
-      if(u->key == LARGE1) continue;
-      edge = u->first;
+      if(N[u].key == LARGE1) continue;
+      edge = N[u].first;
       while(edge != NULL){
         v = edge->end;
         dv = edge->length;
-        if(N[v].key > u->key + dv){
-          N[v].key = u->key + dv;
-          N[v].P = u->id;
-          Q.push(&N[v]);
+        if(N[v].key > N[u].key + dv){
+          N[v].key = N[u].key + dv;
+          N[v].P = N[u].id;
+          Q.push(N[v].id);
         }
         edge = edge->next;
       }
