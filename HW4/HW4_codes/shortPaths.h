@@ -27,6 +27,48 @@ void BellmanFord(nodeitem N[], int Or, int Nm)
 {
    // You program this, a  Bellman Ford algorithm that uses a work queue.  DO NOT implement this as 3 for loops. 
    // That can be very slow, and waste many iterations. 
+   // mark u as -1 in the array when removing it from the queue
+    struct arc *edge;
+    int u,v,dv, min_d, min_v;
+    nodeitem* start = &N[Or];
+    start->key = 0;
+    priority_queue<nodeitem*, vector<nodeitem*>, greater<nodeitem*> > Q;
+    Q.push(start);
+    while(!Q.empty()){
+      nodeitem* u = Q.top();
+      Q.pop();
+      if(u->key == LARGE1) continue;
+      edge = u->first;
+      while(edge != NULL){
+        v = edge->end;
+        dv = edge->length;
+        if(N[v].key > u->key + dv){
+          N[v].key = u->key + dv;
+          N[v].P = u->id;
+          Q.push(&N[v]);
+        }
+        edge = edge->next;
+      }
+    }
+    for(int i = 0; i < Nm; i++){
+        if(N[i].key == LARGE1){
+            cout << "There is a negative cycle" << endl;
+            return;
+        }
+    }
+
+
+    //
+    /*
+    for(int i=1; i<=Nm; i++){
+        N[i].key = LARGE1;
+        N[i].P = -1;
+        N[i].position = 0;
+    }
+    */
+    
+    
+
 
 }/* end Bellman-Ford */
 /* ---------------*/
@@ -74,11 +116,56 @@ void Dijkstra(nodeitem N[], int Or, int Nm)
 
 void DijkstraHeap(nodeitem N[], int Or, int Nm)
 {
-   Heap<nodeitem> *thisHeap;
+   //Heap<nodeitem> *thisHeap;
+   Heap<nodeitem> *thisHeap = new Heap<nodeitem>;
    struct arc *edge;
-   nodeitem *node;
+   nodeitem *node = new nodeitem;
+   int dv, min_d, min_v;
    
    // You write a Dijkstra algorithm using a binary heap; you can reuse the one from HW 2 with minor variations
-
+   // use the heap functions from the file myHeap.full.h
+   // when updating the distance to node v, you must update the heap key of the node in the heap by calling thisHeap->decreaseKey(N[v].position, dv) 
+   // updated with starting from the node where the key was decreased to dv if dv < N[v].key
+    /*
+    for(int i=1; i<=Nm; i++){
+        N[i].key = LARGE1;
+        N[i].P = -1;
+        N[i].position = 0;
+    }
+    */
+    //N[Or].P = -1;
+    //N[Or].position = 0;
+    /*
+    for(int i=Or; i<=Nm; i++){
+        node->id = N[i].id;
+        node->key = N[i].key;
+        node->P = N[i].P;
+        node->position = N[i].position;
+        node = (nodeitem *)node;
+        thisHeap->insert(node);
+    }
+    */
+    N[Or].key = 0;
+    thisHeap->insert(&N[Or]);
+    for(int i=++Or; i<=Nm; i++){
+        thisHeap->insert(&N[i]);
+    }
+    while(!thisHeap->IsEmpty()){
+        node = thisHeap->remove_min();
+        //v = node->id;
+        min_d = node->key;
+        min_v = node->position;
+        edge = node->first;
+        while(edge != NULL){
+            //v = edge->end;
+            dv = min_d + edge->length;
+            if(N[edge->end].key > dv){
+                N[edge->end].key = dv;
+                N[edge->end].P = node->id;
+                thisHeap->decreaseKey(N[edge->end].position, N[edge->end].key);
+            }
+            edge = edge->next;
+        }
+    }
 } /* end DijkstraHeap */ 
 #endif
